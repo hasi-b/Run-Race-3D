@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Net.WebSockets;
+using System.Net;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +11,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed,jumpforce,gravity,verticalVelocity;
 
+    private bool wallSlide;
     private CharacterController charController; 
 
     // Start is called before the first frame update
@@ -19,11 +23,12 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
         move = Vector3.zero;
         move = transform.forward;
 
         if(charController.isGrounded){
+            wallSlide = false;
             verticalVelocity = 0;
             if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)){
                 verticalVelocity = jumpforce;
@@ -40,5 +45,35 @@ public class PlayerController : MonoBehaviour
         move *= speed;
         move.y = verticalVelocity;
         charController.Move(move*  Time.deltaTime);
+        print(wallSlide);
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+{
+    if(!charController.isGrounded)
+    {
+        
+
+        if(hit.collider.tag == "wall")
+        {
+            if (verticalVelocity<0)
+        {
+            wallSlide=true;
+        }
+
+            if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            {
+                verticalVelocity = jumpforce;
+                transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y + 180, transform.eulerAngles.z);
+            }
+        }
+            wallSlide=false;
+
+
     }
 }
+
+
+
+}
+
