@@ -13,11 +13,13 @@ public class PlayerController : MonoBehaviour
 
     private bool wallSlide;
     private CharacterController charController; 
+    private Animator anim;
 
     // Start is called before the first frame update
     void Awake()
     {
         charController = GetComponent<CharacterController>();
+        anim = transform.GetChild(0).GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -31,14 +33,15 @@ public class PlayerController : MonoBehaviour
             wallSlide = false;
             verticalVelocity = 0;
             if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)){
-                verticalVelocity = jumpforce;
-
+                
+                Jump();
             }
         }
         if(!wallSlide)
         {
             gravity=30;
             verticalVelocity-= gravity*Time.deltaTime;
+            
         }
         else{
             gravity = 15;
@@ -46,6 +49,8 @@ public class PlayerController : MonoBehaviour
 
 
         }
+        anim.SetBool("WallSlide",wallSlide);
+        anim.SetBool("Grounded", charController.isGrounded);
 
         move.Normalize();
         move *= speed;
@@ -54,6 +59,11 @@ public class PlayerController : MonoBehaviour
         print(wallSlide);
     }
 
+    void Jump(){
+        verticalVelocity = jumpforce;
+        anim.SetTrigger("Jump");
+
+    }
     private void OnControllerColliderHit(ControllerColliderHit hit)
 {
     if(!charController.isGrounded)
@@ -69,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
             if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
-                verticalVelocity = jumpforce;
+                Jump();
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y + 180, transform.eulerAngles.z);
                  wallSlide=false;
             
