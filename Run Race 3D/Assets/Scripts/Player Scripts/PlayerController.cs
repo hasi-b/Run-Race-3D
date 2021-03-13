@@ -35,10 +35,16 @@ public class PlayerController : MonoBehaviour
 
             }
         }
-        else
+        if(!wallSlide)
         {
             gravity=30;
             verticalVelocity-= gravity*Time.deltaTime;
+        }
+        else{
+            gravity = 15;
+            verticalVelocity-= gravity*Time.deltaTime;
+
+
         }
 
         move.Normalize();
@@ -56,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if(hit.collider.tag == "wall")
         {
-            if (verticalVelocity<0)
+            if (verticalVelocity<-0.7f)
         {
             wallSlide=true;
         }
@@ -65,9 +71,11 @@ public class PlayerController : MonoBehaviour
             {
                 verticalVelocity = jumpforce;
                 transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y + 180, transform.eulerAngles.z);
+                 wallSlide=false;
+            
             }
         }
-            wallSlide=false;
+           
 
 
     }
