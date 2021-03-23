@@ -1,3 +1,6 @@
+//using System.Threading.Tasks.Dataflow;
+using System.Web;
+using System.Net.Http;
 using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Net;
@@ -11,7 +14,7 @@ public class PlayerController : MonoBehaviour
 
     public float speed,jumpforce,gravity,verticalVelocity;
 
-    private bool wallSlide;
+    private bool wallSlide,turn;
     private CharacterController charController; 
     private Animator anim;
 
@@ -35,6 +38,11 @@ public class PlayerController : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)){
                 
                 Jump();
+            }
+            if(turn){
+                    turn = false;
+                    transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y + 180, transform.eulerAngles.z);
+
             }
         }
         if(!wallSlide)
@@ -89,8 +97,15 @@ public class PlayerController : MonoBehaviour
 
 
     }
+    else
+{
+    if(transform.forward != hit.collider.transform.up && hit.collider.tag == "Ground" && !turn){
+        turn = true;
+        
+    }
 }
 
+}
 
 
 }
