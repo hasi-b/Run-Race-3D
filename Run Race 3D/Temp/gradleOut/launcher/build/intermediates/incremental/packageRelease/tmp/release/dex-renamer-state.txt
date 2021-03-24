@@ -1,0 +1,4 @@
+#Wed Mar 24 23:35:08 BDT 2021
+base.0=C\:\\Users\\Ashef\\Documents\\GitHub\\Run-Race-3D\\Run Race 3D\\Temp\\gradleOut\\launcher\\build\\intermediates\\dex\\release\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex

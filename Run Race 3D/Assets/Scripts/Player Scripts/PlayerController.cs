@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private CharacterController charController; 
     private Animator anim;
 
+   
     // Start is called before the first frame update
     void Awake()
     {
@@ -41,6 +42,7 @@ public class PlayerController : MonoBehaviour
             }
             if(turn){
                     turn = false;
+                    
                     transform.eulerAngles = new Vector3(transform.eulerAngles.x,transform.eulerAngles.y + 180, transform.eulerAngles.z);
 
             }
