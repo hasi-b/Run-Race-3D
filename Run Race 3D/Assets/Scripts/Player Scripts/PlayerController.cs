@@ -59,7 +59,7 @@ public class PlayerController : MonoBehaviour
 
 
         }
-        anim.SetBool("WallSlide",wallSlide);
+        anim.SetBool("Wallslide",wallSlide);
         anim.SetBool("Grounded", charController.isGrounded);
 
         move.Normalize();
