@@ -8,8 +8,8 @@ public class EnemyAI : MonoBehaviour
     private Vector3 move;
 
     public float speed, jumpforce, gravity, verticalVelocity;
-
-    private bool wallSlide, turn;
+    public float raycast_Distance = 10f;
+    private bool wallSlide, turn,jump;
     private CharacterController charController;
     private Animator anim;
 
@@ -25,10 +25,15 @@ public class EnemyAI : MonoBehaviour
     {
         move = Vector3.zero;
         move = transform.forward;
-       
 
-       
 
+
+        if (turn)
+        {
+            turn = false;
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 180, transform.eulerAngles.z);
+
+        }
 
         if (!wallSlide)
         {
@@ -56,6 +61,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (charController.isGrounded)
         {
+            jump = true;
+            wallSlide = false;
             verticalVelocity = 0;
             Raycasting();
             Debug.Log("true,grounded");
@@ -70,7 +77,7 @@ public class EnemyAI : MonoBehaviour
         RaycastHit hit;
 
         Debug.Log("ENNTEEEEERRRRED");
-        if (Physics.Raycast(transform.position, transform.forward, out hit))
+        if (Physics.Raycast(transform.position, transform.forward, out hit,raycast_Distance))
         {
             Debug.DrawLine(transform.position , hit.point,Color.red);
 
@@ -85,8 +92,56 @@ public class EnemyAI : MonoBehaviour
             }
 
 
-
             Debug.Log("raycast");
+        }
+    }
+
+    IEnumerator Latejump(float time)
+    {
+        jump = false;
+        yield return new WaitForSeconds(time);
+
+        if (!charController.isGrounded)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 180, transform.eulerAngles.z);
+            verticalVelocity = jumpforce;
+            anim.SetTrigger("Jump");
+            
+        }
+        jump = true;
+        wallSlide = false;
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.tag == "wall")
+        {
+            if (jump)
+            {
+                StartCoroutine(Latejump(Random.Range(0.2f, 0.5f)));
+                if (verticalVelocity < 0)
+                {
+                    wallSlide = true;
+                }
+            }
+        }
+        if(hit.collider.tag == "slide" && charController.isGrounded)
+        {
+            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 180, transform.eulerAngles.z);
+        }
+
+        else if(hit.collider.tag == "slide")
+        {
+            wallSlide = true;
+        }
+
+
+
+
+        if (transform.forward != hit.collider.transform.up && hit.collider.tag == "Ground" && !turn)
+        {
+            turn = true;
+
         }
     }
 }

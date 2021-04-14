@@ -409,7 +409,7 @@ GameObject:
   - component: {fileID: 326294387}
   m_Layer: 0
   m_Name: wall (3)
-  m_TagString: wall
+  m_TagString: slide
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -818,6 +818,7 @@ MonoBehaviour:
   jumpforce: 20
   gravity: 0
   verticalVelocity: 0
+  raycast_Distance: 10
 --- !u!1 &622242375
 GameObject:
   m_ObjectHideFlags: 0
