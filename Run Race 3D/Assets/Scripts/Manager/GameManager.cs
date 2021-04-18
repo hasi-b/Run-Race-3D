@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < runner.Length; i++)
         {
             arrayToBeSorted.Add(runner[i].GetComponent<RankingSystem>());
+            
         }
     }
 
@@ -39,6 +40,17 @@ public class GameManager : MonoBehaviour
 
     void CalculatingRank()
     {
-        arrayToBeSorted = arrayToBeSorted.OrderBy(x=>x.counter).ToList();
+        arrayToBeSorted = arrayToBeSorted.OrderBy( x => x.counter).ToList();
+       /* arrayToBeSorted[0].rank = 3;
+        arrayToBeSorted[0].rank = 2;
+        arrayToBeSorted[0].rank = 1;
+        */
+
+         for(int i=0,j=runner.Length;i< runner.Length; i++)
+        {
+            arrayToBeSorted[i].rank = j;
+            j--;
+        } 
+
     }
 }
