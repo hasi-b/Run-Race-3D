@@ -46,7 +46,7 @@ public class RankingSystem : MonoBehaviour
         if(target.tag == "Finish")
         {
             lapNumber++;
-            currentCheckpoint = 1;
+            GameManager.instance.pass += 1;
         }
     }
 }
