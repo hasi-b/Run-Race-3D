@@ -24,6 +24,9 @@ public class RankingSystem : MonoBehaviour
     void Update()
     {
         CalculateDistance();
+
+        print( gameObject.name+" " + rank);
+
     }
 
     void CalculateDistance()
@@ -46,7 +49,7 @@ public class RankingSystem : MonoBehaviour
         if(target.tag == "Finish")
         {
             lapNumber++;
-            GameManager.instance.pass += 1;
+            GameManager.instance.pass++;
         }
     }
 }

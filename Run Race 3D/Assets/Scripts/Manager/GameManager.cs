@@ -5,6 +5,10 @@ using System.Linq;
 
 public class GameManager : MonoBehaviour
 {
+
+    public bool finish;
+
+
     public static GameManager instance;
     private GameObject[] runner;
     List<RankingSystem> arrayToBeSorted = new List<RankingSystem>();
@@ -49,6 +53,28 @@ public class GameManager : MonoBehaviour
     void CalculatingRank()
     {
         arrayToBeSorted = arrayToBeSorted.OrderBy( x => x.counter).ToList();
+
+      /* switch (arrayToBeSorted.Count)
+        {
+            case 3:
+                arrayToBeSorted[0].rank = 3;
+                arrayToBeSorted[1].rank = 2;
+                arrayToBeSorted[2].rank = 1;
+                break;
+            case 2:
+                arrayToBeSorted[0].rank = 3;
+                arrayToBeSorted[1].rank = 2;
+                break;            
+            case 1:
+                arrayToBeSorted[0].rank = 1;
+                if(firstPlace == "")
+                {
+                    firstPlace = arrayToBeSorted[0].name;
+                }
+                break;
+
+        } 
+
        /* arrayToBeSorted[0].rank = 3;
         arrayToBeSorted[0].rank = 2;
         arrayToBeSorted[0].rank = 1;
@@ -58,9 +84,20 @@ public class GameManager : MonoBehaviour
         {
             arrayToBeSorted[i].rank = j;
             j--;
+            if(arrayToBeSorted[0].rank == 1 && firstPlace == "")
+            {
+                firstPlace = arrayToBeSorted[0].name;
+            }
         } 
+         
 
-         if(pass >= (float)runner.Length / 2)
+
+
+
+
+         
+
+         if(pass == runner.Length )
         {
             pass = 0;
             arrayToBeSorted = arrayToBeSorted.OrderBy(x => x.counter).ToList();
@@ -70,9 +107,14 @@ public class GameManager : MonoBehaviour
                 if(rs.rank == arrayToBeSorted.Count)
                 {
 
-                    if(rs.gameObject.name == "Player")
-                    {
+                    rs.gameObject.SetActive(false);
 
+                    Debug.Log("Number of player remaining: "+ arrayToBeSorted.Count);
+
+                    
+                    if (rs.gameObject.name == "Player")
+                    {
+                        
                     }
 
                     if (thirdPlace == "")
@@ -83,14 +125,13 @@ public class GameManager : MonoBehaviour
                     {
                         SecondPlace = rs.gameObject.name;
                     }
+                    
 
 
 
-
-                    rs.gameObject.SetActive(false);
                 }
             }
-
+            
             runner = GameObject.FindGameObjectsWithTag("Runner");
             arrayToBeSorted.Clear();
 
@@ -99,9 +140,17 @@ public class GameManager : MonoBehaviour
                 arrayToBeSorted.Add(runner[i].GetComponent<RankingSystem>());
 
             }
+            Debug.Log("Runner Length: " + runner.Length);
+            Debug.Log("ArrayCount: " + arrayToBeSorted.Count);
 
 
-        }
+           if(runner.Length < 2)
+            {
+                finish = true;
+            }
+            
+
+        } 
 
 
     }

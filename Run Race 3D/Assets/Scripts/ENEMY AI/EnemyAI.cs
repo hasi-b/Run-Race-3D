@@ -23,6 +23,18 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+       /* if (GameManager.instance.finish) //if the finish line is reached, the ai will not execute its controller and switch to dance animation
+        {
+            if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Dance"))
+            {
+                anim.SetTrigger("Dance");
+                transform.eulerAngles = Vector3.up*180;
+            }
+            return;
+        }
+        */
+
         move = Vector3.zero;
         move = transform.forward;
 
@@ -59,6 +71,13 @@ public class EnemyAI : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+       /* if (GameManager.instance.finish)
+        {
+            return;
+            // this is, if the race is finished, rest of the code will not execute as it doesnt need to execute
+        } */
+
         if (charController.isGrounded)
         {
             jump = true;
