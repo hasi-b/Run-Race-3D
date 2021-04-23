@@ -24,8 +24,25 @@ public class EnemyAI : MonoBehaviour
     void Update()
     {
 
-       /* if (GameManager.instance.finish) //if the finish line is reached, the ai will not execute its controller and switch to dance animation
+        if (GameManager.instance.finish) //if the finish line is reached, the ai will not execute its controller and switch to dance animation
         {
+
+
+            if (!charController.isGrounded)
+            {
+                verticalVelocity -= gravity * Time.deltaTime;
+            }
+            else
+            {
+                verticalVelocity = 0;
+
+            }
+            move.y = verticalVelocity;
+
+            charController.Move(new Vector3(0, move.y * Time.deltaTime, 0));
+
+
+
             if (!anim.GetCurrentAnimatorStateInfo(0).IsName("Dance"))
             {
                 anim.SetTrigger("Dance");
@@ -33,7 +50,7 @@ public class EnemyAI : MonoBehaviour
             }
             return;
         }
-        */
+        
 
         move = Vector3.zero;
         move = transform.forward;
@@ -72,11 +89,11 @@ public class EnemyAI : MonoBehaviour
     private void FixedUpdate()
     {
 
-       /* if (GameManager.instance.finish)
+        if (GameManager.instance.finish)
         {
             return;
             // this is, if the race is finished, rest of the code will not execute as it doesnt need to execute
-        } */
+        } 
 
         if (charController.isGrounded)
         {

@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       /* if (GameManager.instance.finish)
+        if (GameManager.instance.finish)
         {
             move = Vector3.zero;
             if (!charController.isGrounded)
@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
             }
             return;
         }
-        */
+        
 
         move = Vector3.zero;
         move = transform.forward;
