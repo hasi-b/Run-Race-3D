@@ -6,7 +6,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
 
-    public bool finish;
+    public bool finish,failed;
     private InGame ig;
 
     public static GameManager instance;
@@ -107,6 +107,7 @@ public class GameManager : MonoBehaviour
             if(arrayToBeSorted[0].rank == 1 && firstPlace == "")
             {
                 firstPlace = arrayToBeSorted[0].name;
+                GameUI.instance.OpenLB();
             }
 
 
@@ -138,7 +139,8 @@ public class GameManager : MonoBehaviour
                     
                     if (rs.gameObject.name == "Player")
                     {
-                        
+                        GameUI.instance.OpenLB();
+                        failed = true;
                     }
 
                     if (thirdPlace == "")
