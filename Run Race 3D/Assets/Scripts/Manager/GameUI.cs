@@ -13,9 +13,14 @@ public class GameUI : MonoBehaviour
     public GameObject inGame, leaderboard;
     private Button nextlevel;
 
+    public TextMeshProUGUI countText;
+
     private void Awake()
     {
         instance = this;
+       
+        countText.gameObject.SetActive(true);
+        StartCoroutine(StartGame());
     }
     void Start()
     {
@@ -34,6 +39,33 @@ public class GameUI : MonoBehaviour
             }
         }
     }
+
+     IEnumerator StartGame()
+    {
+        
+        countText.text = 3.ToString();
+        countText.color = Color.red;
+        yield return new WaitForSeconds(1);
+        countText.text = 2.ToString();
+        countText.color = Color.yellow;
+        yield return new WaitForSeconds(1);
+        countText.text = 1.ToString();
+        countText.color = Color.green;
+        yield return new WaitForSeconds(1);
+
+        countText.text = "GO";
+        yield return new WaitForSeconds(.5f);
+
+        GameManager.instance.start = true;
+        countText.gameObject.SetActive(false);
+        
+        
+    }
+
+
+
+
+
     public void OpenLB()
     {
         inGame.SetActive(false);
@@ -44,6 +76,7 @@ public class GameUI : MonoBehaviour
     private void Restart()
     {
         nextlevel = GameObject.Find("/GameUI/DashBoard/next").GetComponent<Button>();
+        nextlevel.onClick.RemoveAllListeners();
         nextlevel.onClick.AddListener(() => Reload());
         nextlevel.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Again";
 

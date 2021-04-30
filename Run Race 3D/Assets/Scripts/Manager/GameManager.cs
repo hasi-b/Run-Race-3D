@@ -6,7 +6,7 @@ using System.Linq;
 public class GameManager : MonoBehaviour
 {
 
-    public bool finish,failed;
+    public bool finish,failed,start;
     private InGame ig;
 
     public static GameManager instance;

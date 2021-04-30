@@ -50,6 +50,14 @@ public class EnemyAI : MonoBehaviour
             }
             return;
         }
+
+
+        if (!GameManager.instance.start)
+        {
+            return;
+        }
+        
+
         
 
         move = Vector3.zero;
