@@ -27,6 +27,10 @@ public class RankingSystem : MonoBehaviour
 
         print( gameObject.name+" " + rank);
 
+
+
+
+
     }
 
     void CalculateDistance()

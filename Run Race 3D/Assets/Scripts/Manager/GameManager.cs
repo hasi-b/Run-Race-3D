@@ -7,11 +7,12 @@ public class GameManager : MonoBehaviour
 {
 
     public bool finish;
-
+    private InGame ig;
 
     public static GameManager instance;
     private GameObject[] runner;
     List<RankingSystem> arrayToBeSorted = new List<RankingSystem>();
+    List<RankingSystem> sortingRank = new List<RankingSystem>();
 
     public int pass;
 
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
         instance = this;
 
         runner = GameObject.FindGameObjectsWithTag("Runner");
+
+        ig = FindObjectOfType<InGame>();
     }
 
 
@@ -46,7 +49,23 @@ public class GameManager : MonoBehaviour
 
         CalculatingRank();
 
+        RealTimeLeaderboard();
 
+
+
+
+
+    }
+
+
+    void RealTimeLeaderboard()
+    {
+        sortingRank = arrayToBeSorted;
+        sortingRank = sortingRank.OrderBy(x => x.rank).ToList();
+
+        ig.a = sortingRank[0].name;
+        ig.b = sortingRank[1].name;
+        ig.c = sortingRank[2].name;
     }
 
 
@@ -84,10 +103,15 @@ public class GameManager : MonoBehaviour
         {
             arrayToBeSorted[i].rank = j;
             j--;
+
             if(arrayToBeSorted[0].rank == 1 && firstPlace == "")
             {
                 firstPlace = arrayToBeSorted[0].name;
             }
+
+
+
+
         } 
          
 
@@ -120,10 +144,12 @@ public class GameManager : MonoBehaviour
                     if (thirdPlace == "")
                     {
                         thirdPlace = rs.gameObject.name;
+                        ig.thirdplaceImg.color = Color.red;
                     }
                     else if(SecondPlace == "")
                     {
                         SecondPlace = rs.gameObject.name;
+                        ig.SecondPlaceImg.color = Color.red;
                     }
                     
 
